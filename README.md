@@ -1,12 +1,14 @@
-# Ups power notifications by Email and Telegram Bot using NUT server
+#UPS Power Notifications by Email and Telegram Bot Using NUT Server
 
-Simple script to notify you about power loss/restored by email and telegram using any generic usb UPS with NUT server: https://networkupstools.org/ 
+This simple script sends notifications about power loss/restoration via email and Telegram, utilizing any generic USB UPS with the NUT server: https://networkupstools.org/
 
-Remember to replace the placeholders ("your-email@example.com", "your-telegram-bot-token", and "your-telegram-chat-id") with your actual data. You can check your chat-id typing this url in your browser: https://api.telegram.org/botYOUR-TELEGRAM-API-BOT-TOKEN/getUpdates (change only YOUR-TELEGRAM-API-BOT-TOKEN where the word "bot" is required and without space with the telegram api key.
+Before using this script, ensure that the NUT server is properly configured and correctly recognizes your USB or network UPS.
 
-Also, be aware that /etc/msmtprc should contain your msmtp configuration (which should include your SMTP server and email details). Make sure the recipient email address specified in the script is configured to receive emails from the msmtp application.
+Remember to replace the placeholders ("your-email@example.com", "your-telegram-bot-token", and "your-telegram-chat-id") with your actual data. You can verify your chat ID by typing this URL into your browser: https://api.telegram.org/botYOUR-TELEGRAM-API-BOT-TOKEN/getUpdates. Replace only YOUR-TELEGRAM-API-BOT-TOKEN in the URL, ensuring the word "bot" is included (with no spaces) along with your Telegram API key.
 
-Tested on Ddebian 12 with Proxmox.
+Note that /etc/msmtprc should contain your msmtp configuration, which should include details of your SMTP server and email. Ensure the recipient email address specified in the script is configured to receive emails from the msmtp application.
+
+This script has been tested on Debian 12 with Proxmox.
 
 
 # Disclaimer of Liability
