@@ -1,4 +1,4 @@
-# UPS Power Notifications by Email and Telegram Bot Using NUT Server
+# UPS Power Notifications by Email and Telegram Bot Using NUT Server with System PowerOff
 
 This simple script sends notifications about power loss/restoration via email and Telegram, utilizing any generic USB UPS with the NUT server: https://networkupstools.org/
 
