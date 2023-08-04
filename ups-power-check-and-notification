@@ -1,5 +1,16 @@
 #!/bin/bash
 
+lockfile=/tmp/ups_monitor.lock
+
+# Exit if another instance is running
+if [ -e ${lockfile} ] && kill -0 `cat ${lockfile}`; then
+    exit
+fi
+
+# Make sure the lock file is removed when we exit and then claim it
+trap "rm -f ${lockfile}; exit" INT TERM EXIT
+echo $$ > ${lockfile}
+
 recipient="your-email@example.com"
 telegram_bot_token="your-telegram-bot-token"
 telegram_chat_id="your-telegram-chat-id"
@@ -49,3 +60,5 @@ while true; do
 
     sleep 15
 done
+
+rm -f ${lockfile}
