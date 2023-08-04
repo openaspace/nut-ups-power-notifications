@@ -7,25 +7,38 @@ if [ -e ${lockfile} ] && kill -0 `cat ${lockfile}`; then
     exit
 fi
 
-# Make sure the lock file is removed when we exit and then claim it
+# Make sure the lockfile is removed when we exit and then claim it
 trap "rm -f ${lockfile}; exit" INT TERM EXIT
 echo $$ > ${lockfile}
 
-recipient="your-email@example.com"
-telegram_bot_token="your-telegram-bot-token"
-telegram_chat_id="your-telegram-chat-id"
+recipient="email@example.com"
+telegram_bot_token="telegram_bot_token"
+telegram_chat_id="telegram_chat_id"
 
-# Initialize power status
+# Check the current power status
 power_status_old=$(upsc ups@localhost ups.status)
 
+# Send initial status
+if echo "$power_status_old" | grep -q "OB"; then
+    subject="UPS Alert: Power Loss"
+    content="Power lost. UPS running on battery."
+elif echo "$power_status_old" | grep -q "OL"; then
+    subject="UPS Alert: Power Restored"
+    content="Power restored. UPS running on line."
+fi
+echo -e "Subject: $subject\n\n$content" | msmtp --file=/etc/msmtprc $recipient
+
+# Send a Telegram notification
+curl -s -X POST https://api.telegram.org/bot${telegram_bot_token}/sendMessage -d chat_id=${telegram_chat_id} -d text="$content"
+
 while true; do
-    # Check battery charge level
+    # Check the battery charge level
     battery_charge=$(upsc ups@localhost battery.charge)
     
-    # Check current power status
+    # Check the current power status
     power_status_new=$(upsc ups@localhost ups.status)
 
-    # If power status has changed, send an email
+    # If the power status has changed, send an email
     if [ "$power_status_old" != "$power_status_new" ]; then
         if echo "$power_status_new" | grep -q "OB"; then
             subject="UPS Alert: Power Loss"
@@ -39,11 +52,11 @@ while true; do
         # Send a Telegram notification
         curl -s -X POST https://api.telegram.org/bot${telegram_bot_token}/sendMessage -d chat_id=${telegram_chat_id} -d text="$content"
 
-        # Update power status
+        # Update the power status
         power_status_old=$power_status_new
     fi
 
-    # If battery charge is below 40%, send an email and shut down the system
+    # If the battery charge is below 40%, send an email and shut down the system
     if (( battery_charge < 40 )); then
         echo "Battery charge below 40%, shutting down..."
 
