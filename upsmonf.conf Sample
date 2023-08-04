@@ -1,0 +1,15 @@
+MONITOR ups@localhost 1 admin yourpassword master shutdown.timer=500
+MINSUPPLIES 1
+NOTIFYCMD "/etc/nut/your-monitoring-filename.sh"
+SHUTDOWNCMD "/etc/nut/your-monitoring-filename.sh"
+POLLFREQ 5
+POLLFREQALERT 5
+HOSTSYNC 15
+DEADTIME 180
+POWERDOWNFLAG /etc/killpower
+RBWARNTIME 43200
+NOCOMMWARNTIME 300
+FINALDELAY 5
+NOTIFYFLAG ONBATT SYSLOG+EXEC
+
+
