@@ -8,7 +8,9 @@ Remember to replace the placeholders ("your-email@example.com", "your-telegram-b
 
 Add this lines to yout upsmon.conf: 
 NOTIFYCMD "/etc/nut/your-monitoring-filename.sh"
+
 SHUTDOWNCMD "/etc/nut/your-monitoring-filename.sh"
+
 
 Note that /etc/msmtprc should contain your msmtp configuration, which should include details of your SMTP server and email. Ensure the recipient email address specified in the script is configured to receive emails from the msmtp application.
 
