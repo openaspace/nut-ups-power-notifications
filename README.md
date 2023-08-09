@@ -6,6 +6,10 @@ Before using this script, ensure that the NUT server is properly configured and 
 
 Remember to replace the placeholders ("your-email@example.com", "your-telegram-bot-token", and "your-telegram-chat-id") with your actual data. You can verify your chat ID by typing this URL into your browser: https://api.telegram.org/botYOUR-TELEGRAM-API-BOT-TOKEN/getUpdates. Replace only YOUR-TELEGRAM-API-BOT-TOKEN in the URL, ensuring the word "bot" is included (with no spaces) along with your Telegram API key.
 
+Add this lines to yout upsmon.conf: 
+NOTIFYCMD "/etc/nut/your-monitoring-filename.sh"
+SHUTDOWNCMD "/etc/nut/your-monitoring-filename.sh"
+
 Note that /etc/msmtprc should contain your msmtp configuration, which should include details of your SMTP server and email. Ensure the recipient email address specified in the script is configured to receive emails from the msmtp application.
 
 This script has been tested on Debian 12 with Proxmox.
